@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { sortShowsByRating } from '@/utils/sortShowsByRating'
+import { sortShowsByRating } from '../../utils/sortShowsByRating'
 import { createMockShow } from '../testUtils'
 
 describe('sortShowsByRating', () => {
