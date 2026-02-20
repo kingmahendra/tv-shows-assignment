@@ -18,7 +18,7 @@
   right: 0;
   margin-top: 0;
   padding: 16px;
-  background: #2c3e50;
+  background: #0a6b68;
   color: white;
   display: flex;
   align-items: center;
