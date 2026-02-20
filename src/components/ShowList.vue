@@ -1,24 +1,19 @@
 <script setup lang="ts">
 import { useShowsStore } from '@/stores/shows'
 import ShowCard from './ShowCard.vue'
-import type { Show } from '@/model/model'
 import { sortShowsByRating } from '@/utils/sortShowsByRating'
-import { ref, watchEffect } from 'vue'
+import { computed } from 'vue'
 
 const showsStore = useShowsStore()
 const props = defineProps<{
   genre: string
 }>()
 
-const shows = ref<Show[] | undefined>([])
-let sortedShows = ref<Show[]>([])
-
-watchEffect(() => {
-  shows.value = showsStore.showsByGenre.get(props.genre)
-  if (shows.value?.length) {
-    sortedShows.value = sortShowsByRating(shows.value)
-  }
+const sortedShows = computed(() => {
+ const shows = showsStore.showsByGenre.get(props.genre) || [];
+ return sortShowsByRating(shows)
 })
+
 </script>
 <template>
   <h2 class="title">{{ genre }}</h2>
