@@ -1,6 +1,7 @@
 import './assets/main.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import { useShowsStore } from './stores/shows'
 
 import App from './App.vue'
 import router from './router'
@@ -8,6 +9,13 @@ import router from './router'
 const app = createApp(App)
 
 app.use(createPinia())
-app.use(router)
 
-app.mount('#app')
+const showsStore = useShowsStore()
+Promise.all([showsStore.fetchShows()])
+  .then(() => {
+    app.use(router)
+    app.mount('#app')
+  })
+  .catch(() => {
+    alert(`Show fetching failed, Kindly refresh the page`)
+  })
