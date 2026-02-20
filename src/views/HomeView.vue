@@ -28,4 +28,3 @@ import { genres } from '@/utils/constants'
   background-color: aqua;
 }
 </style>
-

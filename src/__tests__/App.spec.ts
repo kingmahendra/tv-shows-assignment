@@ -26,7 +26,7 @@ describe('App', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
   })
-  
+
   it('renders without crashing', () => {
     const wrapper = mount(App, {
       global: {

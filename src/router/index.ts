@@ -16,7 +16,7 @@ const routes = [
     path: '/shows/:id',
     name: 'show-details',
     component: () => import('@/views/ShowDetails.vue'),
-    props: true,
+    // props: true,
   },
 ]
 

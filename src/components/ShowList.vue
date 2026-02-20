@@ -10,10 +10,9 @@ const props = defineProps<{
 }>()
 
 const sortedShows = computed(() => {
- const shows = showsStore.showsByGenre.get(props.genre) || [];
- return sortShowsByRating(shows)
+  const shows = showsStore.showsByGenre.get(props.genre) || []
+  return sortShowsByRating(shows)
 })
-
 </script>
 <template>
   <h2 class="title">{{ genre }}</h2>

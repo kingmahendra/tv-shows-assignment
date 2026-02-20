@@ -9,6 +9,7 @@ export const useShowsStore = defineStore('shows', () => {
   const all = ref<Map<string, Show>>(new Map<string, Show>())
   const loading = ref<boolean>(false)
   const error = ref<string>('')
+  const selectedShow = ref<Show | null>(null)
 
   async function fetchShows() {
     loading.value = true
@@ -27,6 +28,20 @@ export const useShowsStore = defineStore('shows', () => {
     } catch (err) {
       error.value = 'Fetching shows Failed'
       throw new Error(`Fetching shows Failed : ${err}`)
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function fetchShowDetails(showId: string) {
+    if (!showId) return
+    loading.value = true
+    error.value = ''
+    try {
+      const response = await fetch(`${API_BASE_URL}/shows/${showId}`)
+      selectedShow.value = (await response.json()) as Show
+    } catch {
+      error.value = 'Fetch Show details Failed'
     } finally {
       loading.value = false
     }
@@ -60,6 +75,8 @@ export const useShowsStore = defineStore('shows', () => {
     loading,
     error,
     showsByGenre,
+    selectedShow,
     fetchShows,
+    fetchShowDetails,
   }
 })
