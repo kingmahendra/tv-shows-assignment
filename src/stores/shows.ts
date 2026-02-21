@@ -1,15 +1,16 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import type { Show } from '@/model/model'
+import type { Show, SearchItem} from '@/model/model'
 import { genres, API_BASE_URL } from '@/utils/constants'
 
 export const useShowsStore = defineStore('shows', () => {
   const page = ref<number>(1)
   const ids = ref<string[]>([])
   const all = ref<Map<string, Show>>(new Map<string, Show>())
-  const loading = ref<boolean>(false)
+  const loading = ref<boolean>(true)
   const error = ref<string>('')
   const selectedShow = ref<Show | null>(null)
+  const searchResults = ref<Show[]>([])
 
   async function fetchShows() {
     loading.value = true
@@ -47,6 +48,20 @@ export const useShowsStore = defineStore('shows', () => {
     }
   }
 
+  async function searchShows(query: string) {
+    if (!query) return
+    loading.value = true
+    error.value = ''
+    try {
+      const response = await fetch(`${API_BASE_URL}/search/shows?q=${query}`)
+      searchResults.value = (await response.json()).map((item: SearchItem) => item.show) as Show[]
+    } catch {
+      error.value = 'Search Failed'
+    } finally {
+      loading.value = false
+    }
+  }
+
   // Computed property that groups shows by genre
   const showsByGenre = computed(() => {
     const genreMap = new Map<string, Show[]>()
@@ -76,7 +91,9 @@ export const useShowsStore = defineStore('shows', () => {
     error,
     showsByGenre,
     selectedShow,
+    searchResults,
     fetchShows,
     fetchShowDetails,
+    searchShows
   }
 })

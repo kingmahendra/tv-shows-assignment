@@ -1,9 +1,33 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import SearchShow from './SearchShow.vue'
+import { useShowsStore } from '@/stores/shows'
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+
+const showsStore = useShowsStore()
+const router = useRouter()
+const searchText = ref<string>('')
+
+function handleUpdate(data: string) {
+  searchText.value = data
+}
+
+async function handleSearch(searchString: string) {
+  try {
+    await showsStore.searchShows(searchString)
+    await router.push('/search-results')
+    searchText.value = ''
+  } catch (error) {
+    console.error('Search failed:', error)
+  }
+}
+
+</script>
 
 <template>
   <nav id="nav">
     <RouterLink id="logo" to="/">All TV Shows</RouterLink>
-    <RouterLink id="logo" to="/search-results">Search results</RouterLink>
+    <SearchShow :modelValue="searchText" @update:modelValue="handleUpdate" @search="handleSearch" />
     <RouterLink id="logo" to="/shows/1">Show details</RouterLink>
   </nav>
 </template>
