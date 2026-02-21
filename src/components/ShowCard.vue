@@ -48,7 +48,7 @@ const props = defineProps<{
   transition: all 0.2s ease;
   cursor: pointer;
   min-height: 415px;
-  max-width: 210px;
+
 }
 
 .show h2 {

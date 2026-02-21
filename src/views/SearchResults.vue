@@ -1,24 +1,12 @@
 <script setup lang="ts">
 import { useShowsStore } from '@/stores/shows'
 import ShowCard from '@/components/ShowCard.vue'
-import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import type { Show } from '@/model/model'
 import GoBack from '@/components/GoBack.vue'
 
 const showsStore = useShowsStore()
-const searchShows = ref<Show[]>([])
 const { loading, error, searchResults } = storeToRefs(showsStore)
-watch(
-  searchResults,
-  (newValue, oldValue) => {
-    console.log(oldValue)
-    searchShows.value = newValue
-  },
-  {
-    immediate: true,
-  },
-)
+
 </script>
 
 <template>
@@ -36,16 +24,16 @@ watch(
       <p>{{ error }}</p>
     </div>
 
-    <div v-else-if="searchShows.length === 0" class="no-results">
+    <div v-else-if="searchResults.length === 0" class="no-results">
       <p>No shows found. Try searching for something else!</p>
     </div>
 
     <div v-else class="results">
       <p class="result-count">
-        Found {{ searchShows.length }} show{{ searchShows.length !== 1 ? 's' : '' }}
+        Found {{ searchResults.length }} show{{ searchResults.length !== 1 ? 's' : '' }}
       </p>
       <div class="shows">
-        <div v-for="show in searchShows" :key="show.id" class="show-item">
+        <div v-for="show in searchResults" :key="show.id" class="show-item">
           <ShowCard :show="show" />
         </div>
       </div>

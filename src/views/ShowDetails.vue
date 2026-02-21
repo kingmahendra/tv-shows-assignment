@@ -52,6 +52,10 @@ const { loading, error, selectedShow } = storeToRefs(showsStore)
   overflow: hidden;
 }
 
+.show-content .show {
+  max-width: 210px;
+}
+
 .loading,
 .error,
 .show-not-found {
