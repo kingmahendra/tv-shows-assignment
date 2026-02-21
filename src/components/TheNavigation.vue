@@ -21,7 +21,6 @@ async function handleSearch(searchString: string) {
     console.error('Search failed:', error)
   }
 }
-
 </script>
 
 <template>
@@ -38,7 +37,7 @@ async function handleSearch(searchString: string) {
   left: 0;
   right: 0;
   margin-top: 0;
-  padding: 16px;
+  padding: 0.25rem;
   background: #0a6b68;
   color: white;
   display: flex;

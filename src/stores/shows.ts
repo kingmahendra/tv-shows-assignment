@@ -1,6 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import type { Show, SearchItem} from '@/model/model'
+import type { Show, SearchItem } from '@/model/model'
 import { genres, API_BASE_URL } from '@/utils/constants'
 
 export const useShowsStore = defineStore('shows', () => {
@@ -94,6 +94,6 @@ export const useShowsStore = defineStore('shows', () => {
     searchResults,
     fetchShows,
     fetchShowDetails,
-    searchShows
+    searchShows,
   }
 })

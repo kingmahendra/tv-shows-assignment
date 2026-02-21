@@ -6,7 +6,6 @@ import GoBack from '@/components/GoBack.vue'
 
 const showsStore = useShowsStore()
 const { loading, error, searchResults } = storeToRefs(showsStore)
-
 </script>
 
 <template>

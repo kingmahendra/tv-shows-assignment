@@ -89,7 +89,7 @@ const handleKeyPress = (event: KeyboardEvent) => {
 }
 
 .search-button {
-  background: #007bff;
+  background: #2a9d8f;
   border: none;
   border-radius: 50%;
   width: 40px;
@@ -103,7 +103,7 @@ const handleKeyPress = (event: KeyboardEvent) => {
 }
 
 .search-button:hover {
-  background: #0056b3;
+  background: #264653;
 }
 
 .search-button:active {
