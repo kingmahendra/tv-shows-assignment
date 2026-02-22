@@ -12,6 +12,28 @@ export const useShowsStore = defineStore('shows', () => {
   const selectedShow = ref<Show | null>(null)
   const searchResults = ref<Show[]>([])
 
+   // Computed property that groups shows by genre
+  const showsByGenre = computed(() => {
+    const genreMap = new Map<string, Show[]>()
+
+    // Initialize map with all genres from constants
+    genres.forEach((genre) => {
+      genreMap.set(genre, [])
+    })
+
+    // Group shows by their genres
+    all.value.forEach((show) => {
+      show.genres.forEach((showGenre) => {
+        // Only add if the genre exists in our constants
+        if (genreMap.has(showGenre)) {
+          genreMap.get(showGenre)!.push(show)
+        }
+      })
+    })
+
+    return genreMap
+  })
+
   async function fetchShows() {
     loading.value = true
     error.value = ''
@@ -74,27 +96,7 @@ export const useShowsStore = defineStore('shows', () => {
     }
   }
 
-  // Computed property that groups shows by genre
-  const showsByGenre = computed(() => {
-    const genreMap = new Map<string, Show[]>()
-
-    // Initialize map with all genres from constants
-    genres.forEach((genre) => {
-      genreMap.set(genre, [])
-    })
-
-    // Group shows by their genres
-    all.value.forEach((show) => {
-      show.genres.forEach((showGenre) => {
-        // Only add if the genre exists in our constants
-        if (genreMap.has(showGenre)) {
-          genreMap.get(showGenre)!.push(show)
-        }
-      })
-    })
-
-    return genreMap
-  })
+ 
 
   return {
     page,
