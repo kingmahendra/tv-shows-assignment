@@ -11,7 +11,7 @@ const app = createApp(App)
 app.use(createPinia())
 
 const showsStore = useShowsStore()
-Promise.all([showsStore.fetchShows()])
+Promise.resolve([showsStore.fetchShows()])
   .then(() => {
     app.use(router)
     app.mount('#app')

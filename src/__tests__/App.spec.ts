@@ -38,4 +38,35 @@ describe('App', () => {
     })
     expect(wrapper.exists()).toBe(true)
   })
+
+  it('renders header with TheNavigation component', () => {
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router],
+        stubs: {
+          RouterView: { template: '<div>Router View Stub</div>' },
+        },
+      },
+    })
+
+    const header = wrapper.find('header')
+    expect(header.exists()).toBe(true)
+
+    const navigation = header.findComponent(TheNavigation)
+    expect(navigation.exists()).toBe(true)
+  })
+
+  it('renders RouterView component', () => {
+    const wrapper = mount(App, {
+      global: {
+        plugins: [router],
+        stubs: {
+          TheNavigation: { template: '<nav>Navigation</nav>' },
+        },
+      },
+    })
+
+    const routerView = wrapper.findComponent({ name: 'RouterView' })
+    expect(routerView.exists()).toBe(true)
+  })
 })

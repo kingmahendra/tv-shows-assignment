@@ -24,8 +24,8 @@ describe('ThePagination', () => {
     const wrapper = mount(ThePagination)
     const buttons = wrapper.findAll('.pagination-button')
     expect(buttons).toHaveLength(2)
-    expect(buttons[0].text()).toBe('<< Prev')
-    expect(buttons[1].text()).toBe('Next >>')
+    expect(buttons[0]?.text()).toBe('<< Prev')
+    expect(buttons[1]?.text()).toBe('Next >>')
   })
 
   it('disables previous button when on page 1', () => {
@@ -34,7 +34,7 @@ describe('ThePagination', () => {
 
     const wrapper = mount(ThePagination)
     const prevButton = wrapper.findAll('.pagination-button')[0]
-    expect(prevButton.attributes('disabled')).toBeDefined()
+    expect(prevButton?.attributes('disabled')).toBeDefined()
   })
 
   it('enables previous button when on page greater than 1', () => {
@@ -43,7 +43,7 @@ describe('ThePagination', () => {
 
     const wrapper = mount(ThePagination)
     const prevButton = wrapper.findAll('.pagination-button')[0]
-    expect(prevButton.attributes('disabled')).toBeUndefined()
+    expect(prevButton?.attributes('disabled')).toBeUndefined()
   })
 
   it('calls loadPrevious when previous button is clicked', async () => {
@@ -53,7 +53,7 @@ describe('ThePagination', () => {
 
     const wrapper = mount(ThePagination)
     const prevButton = wrapper.findAll('.pagination-button')[0]
-    await prevButton.trigger('click')
+    await prevButton?.trigger('click')
 
     expect(loadPreviousSpy).toHaveBeenCalled()
   })
@@ -64,7 +64,7 @@ describe('ThePagination', () => {
 
     const wrapper = mount(ThePagination)
     const nextButton = wrapper.findAll('.pagination-button')[1]
-    await nextButton.trigger('click')
+    await nextButton?.trigger('click')
 
     expect(loadMoreSpy).toHaveBeenCalled()
   })
