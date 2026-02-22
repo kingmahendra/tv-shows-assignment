@@ -6,6 +6,7 @@ It contain three main pages/views and search functionality
 ### Home
 
 Home page displays list of TV shows grouped by Genre. TV shows are sorted by their ratings, shows with high rating comes first without rating appear last.
+On top on header there is pagination component to load more tv shows. Also header contains a search component to search tv shows with keyword.
 
 ### Show Details
 
