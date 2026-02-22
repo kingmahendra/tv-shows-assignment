@@ -5,14 +5,13 @@ import { genres, API_BASE_URL } from '@/utils/constants'
 
 export const useShowsStore = defineStore('shows', () => {
   const page = ref<number>(1)
-  const ids = ref<string[]>([])
   const all = ref<Map<string, Show>>(new Map<string, Show>())
   const loading = ref<boolean>(true)
   const error = ref<string>('')
   const selectedShow = ref<Show | null>(null)
   const searchResults = ref<Show[]>([])
 
-   // Computed property that groups shows by genre
+  // Computed property that groups shows by genre
   const showsByGenre = computed(() => {
     const genreMap = new Map<string, Show[]>()
 
@@ -40,13 +39,10 @@ export const useShowsStore = defineStore('shows', () => {
     try {
       const response = await fetch(`${API_BASE_URL}/shows?page=${page.value}`)
       const data = (await response.json()) as Show[]
-      const newIds: string[] = []
       const newAll: Map<string, Show> = new Map<string, Show>()
       data.forEach((show) => {
-        newIds.push(show.id.toString())
         newAll.set(show.id.toString(), show)
       })
-      ids.value = newIds
       all.value = newAll
     } catch (err) {
       error.value = 'Fetching shows Failed'
@@ -96,11 +92,8 @@ export const useShowsStore = defineStore('shows', () => {
     }
   }
 
- 
-
   return {
     page,
-    ids,
     all,
     loading,
     error,
@@ -111,6 +104,6 @@ export const useShowsStore = defineStore('shows', () => {
     fetchShowDetails,
     searchShows,
     loadMore,
-    loadPrevious
+    loadPrevious,
   }
 })

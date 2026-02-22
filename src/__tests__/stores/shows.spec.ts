@@ -15,15 +15,14 @@ describe('useShowsStore', () => {
   })
 
   describe('initial state', () => {
-    it('should have empty ids array and empty all map', () => {
+    it('should have all map', () => {
       const store = useShowsStore()
-      expect(store.ids).toEqual([])
       expect(store.all.size).toBe(0)
     })
   })
 
   describe('fetchShows', () => {
-    it('should fetch shows and populate ids and all correctly', async () => {
+    it('should fetch shows and populate all correctly', async () => {
       const mockShows = [
         createMockShow({ id: 1, name: 'Show 1', genres: ['Drama'] }),
         createMockShow({ id: 2, name: 'Show 2', genres: ['Comedy'] }),
@@ -38,7 +37,6 @@ describe('useShowsStore', () => {
       await store.fetchShows()
 
       expect(fetchMock).toHaveBeenCalledWith('https://api.tvmaze.com/shows?page=1')
-      expect(store.ids).toEqual(['1', '2', '3'])
       expect(store.all.size).toBe(3)
       expect(store.all.get('1')?.name).toBe('Show 1')
       expect(store.all.get('2')?.name).toBe('Show 2')
@@ -53,7 +51,6 @@ describe('useShowsStore', () => {
       const store = useShowsStore()
       await store.fetchShows()
 
-      expect(store.ids).toEqual([])
       expect(store.all.size).toBe(0)
     })
 
@@ -63,7 +60,6 @@ describe('useShowsStore', () => {
       const store = useShowsStore()
 
       await expect(store.fetchShows()).rejects.toThrow('Network error')
-      expect(store.ids).toEqual([])
       expect(store.all.size).toBe(0)
     })
   })
@@ -88,10 +84,8 @@ describe('useShowsStore', () => {
         createMockShow({ id: 3, name: 'Crime Show', genres: ['Crime'] }),
       ]
 
-      const ids = mockShows.map((show) => show.id.toString())
       const all = new Map(mockShows.map((show) => [show.id.toString(), show]))
 
-      store.ids = ids
       store.all = all
 
       const result = store.showsByGenre
@@ -116,7 +110,6 @@ describe('useShowsStore', () => {
         createMockShow({ id: 1, name: 'Multi-Genre Show', genres: ['Drama', 'Crime', 'Thriller'] }),
       ]
 
-      store.ids = ['1']
       store.all = new Map([['1', mockShows[0] as Show]])
 
       const result = store.showsByGenre
@@ -138,7 +131,6 @@ describe('useShowsStore', () => {
         createMockShow({ id: 1, name: 'Unknown Genre Show', genres: ['Unknown Genre', 'Drama'] }),
       ]
 
-      store.ids = ['1']
       store.all = new Map([['1', mockShows[0] as Show]])
 
       const result = store.showsByGenre
@@ -158,7 +150,6 @@ describe('useShowsStore', () => {
         createMockShow({ id: 3, name: 'Comedy Show', genres: ['Comedy'] }),
       ]
 
-      store.ids = ['1', '2', '3']
       store.all = new Map<string, Show>([
         ['1', mockShows[0] as Show],
         ['2', mockShows[1] as Show],
@@ -183,7 +174,6 @@ describe('useShowsStore', () => {
       expect(store.showsByGenre.get('Drama')).toEqual([])
 
       const mockShow = createMockShow({ id: 1, name: 'New Drama Show', genres: ['Drama'] })
-      store.ids = ['1']
       store.all = new Map([['1', mockShow]])
 
       expect(store.showsByGenre.get('Drama')).toHaveLength(1)

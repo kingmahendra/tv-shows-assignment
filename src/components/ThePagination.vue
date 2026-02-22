@@ -21,7 +21,6 @@ async function handlePreviousClick() {
   </div>
 </template>
 <style scoped>
-
 .pagination-controls {
   display: flex;
   gap: 10px;
