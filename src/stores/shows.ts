@@ -5,7 +5,7 @@ import { genres, API_BASE_URL } from '@/utils/constants'
 
 export const useShowsStore = defineStore('shows', () => {
   const page = ref<number>(1)
-  const all = ref<Map<string, Show>>(new Map<string, Show>())
+  const showsMap = ref<Map<string, Show>>(new Map<string, Show>())
   const loading = ref<boolean>(true)
   const error = ref<string>('')
   const selectedShow = ref<Show | null>(null)
@@ -21,7 +21,7 @@ export const useShowsStore = defineStore('shows', () => {
     })
 
     // Group shows by their genres
-    all.value.forEach((show) => {
+    showsMap.value.forEach((show) => {
       show.genres.forEach((showGenre) => {
         // Only add if the genre exists in our constants
         if (genreMap.has(showGenre)) {
@@ -39,11 +39,14 @@ export const useShowsStore = defineStore('shows', () => {
     try {
       const response = await fetch(`${API_BASE_URL}/shows?page=${page.value}`)
       const data = (await response.json()) as Show[]
-      const newAll: Map<string, Show> = new Map<string, Show>()
+
+      //create a new map with fetch shows and update the showsMap
+      const newShowsMap: Map<string, Show> = new Map<string, Show>()
       data.forEach((show) => {
-        newAll.set(show.id.toString(), show)
+        newShowsMap.set(show.id.toString(), show)
       })
-      all.value = newAll
+      showsMap.value = newShowsMap
+      
     } catch (err) {
       error.value = 'Fetching shows Failed'
       throw new Error(`Fetching shows Failed : ${err}`)
@@ -94,7 +97,7 @@ export const useShowsStore = defineStore('shows', () => {
 
   return {
     page,
-    all,
+    showsMap,
     loading,
     error,
     showsByGenre,
