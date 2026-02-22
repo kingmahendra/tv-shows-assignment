@@ -34,6 +34,18 @@ export const useShowsStore = defineStore('shows', () => {
     }
   }
 
+  async function loadMore() {
+    page.value += 1
+    await fetchShows()
+  }
+
+  async function loadPrevious() {
+    if (page.value > 1) {
+      page.value -= 1
+      await fetchShows()
+    }
+  }
+
   async function fetchShowDetails(showId: string) {
     if (!showId) return
     loading.value = true
@@ -85,6 +97,7 @@ export const useShowsStore = defineStore('shows', () => {
   })
 
   return {
+    page,
     ids,
     all,
     loading,
@@ -95,5 +108,7 @@ export const useShowsStore = defineStore('shows', () => {
     fetchShows,
     fetchShowDetails,
     searchShows,
+    loadMore,
+    loadPrevious
   }
 })

@@ -3,6 +3,7 @@ import SearchShow from './SearchShow.vue'
 import { useShowsStore } from '@/stores/shows'
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
+import ThePagination from './ThePagination.vue'
 
 const showsStore = useShowsStore()
 const router = useRouter()
@@ -27,7 +28,7 @@ async function handleSearch(searchString: string) {
   <nav id="nav">
     <RouterLink id="logo" to="/">All TV Shows</RouterLink>
     <SearchShow :modelValue="searchText" @update:modelValue="handleUpdate" @search="handleSearch" />
-    <RouterLink id="logo" to="/shows/1">Show details</RouterLink>
+    <ThePagination id="show-more" v-if="$route.name === 'home'" />
   </nav>
 </template>
 <style scoped>
