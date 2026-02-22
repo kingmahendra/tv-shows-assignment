@@ -3,6 +3,7 @@ import { useShowsStore } from '@/stores/shows'
 import ShowCard from '@/components/ShowCard.vue'
 import { storeToRefs } from 'pinia'
 import GoBack from '@/components/GoBack.vue'
+import TheLoader from '@/components/TheLoader.vue'
 
 const showsStore = useShowsStore()
 const { loading, error, searchResults } = storeToRefs(showsStore)
@@ -15,8 +16,7 @@ const { loading, error, searchResults } = storeToRefs(showsStore)
       <GoBack />
     </div>
 
-    <div v-if="loading" class="loader">
-    </div>
+    <TheLoader v-if="loading"/>
 
     <div v-else-if="error" class="error">
       <p>{{ error }}</p>
@@ -90,24 +90,6 @@ h1 {
   width: 100%;
   max-width: 320px;
 }
-
-.loader {
-  margin: 0 auto;
-  width: 50px;
-  padding: 8px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: #25b09b;
-  --_m: 
-    conic-gradient(#0000 10%,#000),
-    linear-gradient(#000 0 0) content-box;
-  -webkit-mask: var(--_m);
-          mask: var(--_m);
-  -webkit-mask-composite: source-out;
-          mask-composite: subtract;
-  animation: l3 1s infinite linear;
-}
-@keyframes l3 {to{transform: rotate(1turn)}}
 
 @media (max-width: 768px) {
   .search-results {

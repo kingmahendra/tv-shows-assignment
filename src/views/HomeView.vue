@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import TheLoader from '@/components/TheLoader.vue';
 import ShowList from '../components/ShowList.vue'
 import { genres } from '@/utils/constants'
 </script>
@@ -12,7 +13,7 @@ import { genres } from '@/utils/constants'
       </div>
     </template>
     <template #fallback>
-      <progress class="progress" max="100">Loading...</progress>
+      <TheLoader/>
     </template>
   </Suspense>
 </template>
@@ -20,11 +21,5 @@ import { genres } from '@/utils/constants'
 .home {
   margin: 0 auto;
   padding: 1.5rem;
-}
-.progress {
-  margin: 0 auto;
-  width: 100%;
-  height: 30px;
-  background-color: aqua;
 }
 </style>
